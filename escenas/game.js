@@ -1,42 +1,43 @@
-export default class game extends Phaser.Scene {
+export default class Game extends Phaser.Scene {
     constructor() {
-      // key of the scene
-      // the key will be used to start the scene by other scenes
-      super(game);
-    }
-  
-    init(datos) {
-     
+      super("Game"); // Debes pasar un objeto con la propiedad 'key'
     }
   
     create() {
-      // todo / para hacer: texto de puntaje
-      const map = this.make.tilemap({ key: "map" });
-      
-      const capaFondo = map.addTilesetImage("imagen", "tilesFondo");
-    const capaPlataform = map.addTilesetImage(
-      "muro",
-      "tilesPlataforma"
-    );
-
-    
-    const imagenLayer = map.createLayer("background", capaFondo, 0, 0);
-    const plataformaLayer = map.createLayer("platform", capaPlataform, 0, 0);
-    const objectosLayer = map.getObjectLayer("objects");
+      // Crear el mapa y las capas
+      const mapa = this.make.tilemap({ key: "mapa" });
+      const capaFondo = mapa.addTilesetImage("Fondo", "tilesFondo");
+      const capaPlataform = mapa.addTilesetImage("Plataforma", "tilesPlataforma");
   
-      plataformaLayer.setCollisionByProperty({ colision: true });
+      const FondoLayer = mapa.createLayer("background", capaFondo, 0, 0);
+      const PlataformaLayer = mapa.createLayer("platform", capaPlataform, 0, 0);
   
-      console.log("spawn point personaje", objectosLayer);
+      // Configurar colisiones
+      PlataformaLayer.setCollisionByProperty({ collision: true });
   
-      // crear el jugador
-     
-      let spawnPoint = map.findObject("objects", (obj) => obj.name === "personaje");
-      console.log(spawnPoint);
-      // The player and its settings
-      this.jugador = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, "personaje");
+      // Encontrar el punto de inicio del personaje
+      const spawnPoint = mapa.findObject("objects", (obj) => obj.name === "personaje");
+      if (!spawnPoint) {
+        console.error("No se pudo encontrar el punto de inicio del personaje");
+        return;
+      }
+  
+      // Crear el jugador
+      this.jugador = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, "p");
       this.jugador.setBounce(0.1);
       this.jugador.setCollideWorldBounds(true);
+  
+      // Imprimir información de depuración
+      console.log("Spawn point personaje", spawnPoint);
     }
-}
+  }
+    
+   // this.physics.add.collider(this.jugador, plataformaLayer);
+    
+   // this.physics.add.collider(
+      //this.jugador,
+     // null,
+    //this
+    //);
 
-update()
+

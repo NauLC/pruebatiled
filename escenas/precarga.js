@@ -6,8 +6,13 @@ export default class precarga extends Phaser.Scene {
       super("precarga");
     }
      preload() {
-        this.load.tilemapTiledJSON("map", "./public/asssets/prueba.json");
-        this.load.image("tilesPlataforma", "./public/asssets/muro.png");
-        this.load.image("tilesFondo", "./public/asssets/imagen.png");
+        this.load.tilemapTiledJSON("mapa", "./public/assets/pruebe.json");
+        this.load.image("tilesPlataforma", "./public/assets/Plataforma.png");
+        this.load.image("tilesFondo", "./public/assets/Fondo.png");
+        this.load.image("p", "./public/assets/boceto pj.png");
      }
     }
+  
+      
+    
+    
